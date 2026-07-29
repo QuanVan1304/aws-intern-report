@@ -1,242 +1,150 @@
 ---
-title : "Prerequiste"
-date : 2024-01-01 
-weight : 2 
-chapter : false
-pre : " <b> 5.2. </b> "
+title: "Prerequisites & Infrastructure"
+weight: 2
+chapter: false
+pre: " <b> 5.2. </b> "
 ---
 
-#### IAM permissions
-Add the following IAM permission policy to your user account to deploy and cleanup this workshop.
+# Part 2 — Prerequisites & AWS Credentials Configuration
+
+## 2.1. AWS Service Quota Requirements
+
+To execute real training jobs on AWS SageMaker, the deployment AWS account must have sufficient quotas. Many default or organizational accounts might be restricted with a **SageMaker Training Jobs quota = 0** for all instance types. This will completely block the ability to run real Training Jobs (even via SageMaker Pipelines).
+
+> **Lesson learned:** When encountering a `ResourceLimitExceeded` error, the first step is to check the Service Quotas, not change the instance type. If the quota is 0 for the entire region on the current account, you must submit a quota increase request to AWS Support (e.g., request an increase to 1 for `ml.m5.large`) or switch to an unrestricted environment to avoid losing progress.
+
+## 2.2. Check Service Quotas before starting
+
+```python
+import boto3
+
+quotas = boto3.client('service-quotas', region_name='ap-southeast-1')
+response = quotas.list_service_quotas(ServiceCode='sagemaker', MaxResults=100)
+
+for q in response['Quotas']:
+    if q['Value'] > 0:
+        print(f"{q['Value']:>6.0f}  {q['QuotaName']}")
 ```
+
+In the early stages, the Endpoint quota (`ml.t2.medium`) was sufficient, while the Training Job quota remained 0 for all instance types — this is the reason the initial model used for deployment was trained **locally** first, then later moved to real training on SageMaker when the quota was approved.
+
+## 2.3. Create IAM User and Role
+
+- Create IAM User `admin-user` to bootstrap initial infrastructure (create bucket, role...).
+- Create a separate **IAM Role for SageMaker Execution**: `SageMaker-ExecutionRole-QuanVan`.
+- In actual deployment, this Role was attached with **broad-scope managed policies** (`AmazonSageMakerFullAccess`, `AmazonS3FullAccess`, `CloudWatchFullAccess`) due to time pressure when debugging multiple consecutive deployment errors.
+
+### Recommended IAM Permissions Policy (least-privilege) for standard deployment
+
+For those re-deploying the project or for production environments, it is recommended to use minimal policies instead of FullAccess:
+
+```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3ProjectBucketOnly",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::YOUR-BUCKET-NAME",
+        "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+      ]
+    },
+    {
+      "Sid": "SageMakerModelAndEndpoint",
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:CreateModel", "sagemaker:DescribeModel", "sagemaker:DeleteModel",
+        "sagemaker:CreateEndpointConfig", "sagemaker:DeleteEndpointConfig",
+        "sagemaker:CreateEndpoint", "sagemaker:UpdateEndpoint",
+        "sagemaker:DescribeEndpoint", "sagemaker:InvokeEndpoint", "sagemaker:DeleteEndpoint",
+        "sagemaker:CreateTrainingJob", "sagemaker:DescribeTrainingJob",
+        "sagemaker:CreatePipeline", "sagemaker:UpdatePipeline",
+        "sagemaker:StartPipelineExecution", "sagemaker:DescribePipelineExecution"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ECRPullBuiltInContainer",
+      "Effect": "Allow",
+      "Action": ["ecr:GetAuthorizationToken", "ecr:BatchGetImage",
+                 "ecr:GetDownloadUrlForLayer", "ecr:BatchCheckLayerAvailability"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudWatchLogsForSageMaker",
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents", "logs:GetLogEvents"],
+      "Resource": "arn:aws:logs:*:*:log-group:/aws/sagemaker/*"
+    },
+    {
+      "Sid": "LambdaApiGateway",
+      "Effect": "Allow",
+      "Action": ["lambda:*", "apigateway:*"],
+      "Resource": "*"
+    }
+  ]
 }
-
 ```
 
-#### Provision resources using CloudFormation
+> **Note:** Using FullAccess during actual development helps avoid wasting time debugging permission errors while rushing to resolve other deployment issues (see Part 5.3) — a reasonable trade-off for rapid development phases, but it should be tightened back to least-privilege before long-term production deployment.
 
-In this lab, we will use **N.Virginia region (us-east-1)**.
+## 2.4. Create S3 Bucket
 
-To prepare the workshop environment, deploy this **CloudFormation Template** (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Accept all of the defaults when deploying the template. 
+Dedicated bucket: `quanvan-ml-forecasting-2026` (region `ap-southeast-1`).
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+Directory structure:
+```text
+quanvan-ml-forecasting-2026/ml-forecasting/
+├── data/
+│   ├── raw/                     ← train.csv, store.csv downloaded from Kaggle
+│   └── processed/                ← train.csv, val.csv, test.csv, scaler.pkl
+├── pipeline-code/                 ← sourcedir.tar.gz packaged automatically by Pipeline (Part 4.4)
+└── models/
+    ├── artifacts/                 ← single deployed model (Part 5)
+    └── pipeline-artifacts/         ← model generated from SageMaker Pipeline
+```
 
-+ Tick 2 acknowledgement boxes
-+ Choose **Create stack**
+## 2.5. Initialize Local Environment
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+```powershell
+# 1. Clone project to local machine
+git clone [https://github.com/YOUR-USERNAME/aws-internship-ML-forecasting.git](https://github.com/YOUR-USERNAME/aws-internship-ML-forecasting.git)
+cd aws-internship-ML-forecasting
 
-The **ClouddFormation** deployment requires about 15 minutes to complete.
+# 2. Initialize and activate Python virtual environment
+python -m venv venv
+.\venv\Scripts\activate
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+# 3. Install all dependencies
+pip install -r requirements.txt
 
-+ **2 VPCs** have been created
+# 4. Check AWS connection configuration
+python verify_setup.py
+```
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+## 2.6. Configure `config.py`
 
-+ **3 EC2s** have been created
+```python
+# config.py — Configure AWS account information and resources
+BUCKET_NAME = "quanvan-ml-forecasting-2026"
+REGION = "ap-southeast-1"
+PREFIX = "ml-forecasting"
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+S3_RAW_DATA = f"s3://{BUCKET_NAME}/{PREFIX}/data/raw/"
+S3_PROCESSED_DATA = f"s3://{BUCKET_NAME}/{PREFIX}/data/processed/"
+S3_MODEL_ARTIFACTS = f"s3://{BUCKET_NAME}/{PREFIX}/models/artifacts/"
+SAGEMAKER_ROLE_ARN = "arn:aws:iam::897355252080:role/SageMaker-ExecutionRole-QuanVan"
+```
+
+## 2.7. Tools and Libraries
+
+| Tool | Version/Notes |
+|---|---|
+| Python | Separate Venv for each purpose (main environment, and separate `sagemaker-v3-env` for SDK v3 testing) |
+| `boto3` | Used directly (instead of SageMaker SDK) for deploy/packaging operations in Week 6, to maintain full control over the process and avoid SDK compatibility issues |
+| SageMaker Python SDK | Pinned `sagemaker==2.257.5` — used specifically for building Pipeline (Part 4.4), a proven stable version after encountering dependency conflicts with newer versions (`sagemaker-core`) |
+| AWS CLI v2 | Configured profile for account `897355252080` |
+| `xgboost` | Must match version with built-in container used during serving (local `1.7.6` ↔ container `sagemaker-xgboost:1.7-1`) — this was an actual source of error encountered, see Part 5.3 |
+| `curl` / `curl.exe` | Test REST API after Endpoint is available |
