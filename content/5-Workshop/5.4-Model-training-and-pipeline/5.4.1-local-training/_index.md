@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.4.1. </b> "
 ---
 
-# Local Training: XGBoost vs. LSTM
-
 ## Model comparison results
 
 | Model | Test RMSE | Test MAPE | Training time | Decision |

@@ -1,12 +1,10 @@
 ---
-title: "Endpoint Deployment"
+title: "Deploy Endpoint"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 5.5.1. </b> "
 ---
-
-# Deploying to a SageMaker Endpoint
 
 ## Packaging the model for SageMaker
 
@@ -67,7 +65,8 @@ The script automatically checks whether the endpoint already exists — `update_
 
 ✅ ENDPOINT DA SAN SANG DE SU DUNG!
 ```
-
+*(Confirmation on the AWS Console: The Endpoint has been successfully created and transitioned to the InService state, ready to serve forecasting requests)*
+![Endpoint In Service](/images/5-Workshop/5.5-Endpoint-and-serverless-api/endpoint-in-service.png)
 ## Three real bugs encountered and how they were fixed
 
 | # | Error | Root cause | Fix |
@@ -78,6 +77,8 @@ The script automatically checks whether the endpoint already exists — `update_
 
 {{% notice tip %}}
 **Actual debugging workflow:** read the raw traceback directly from CloudWatch Logs (`aws logs get-log-events`), then isolate the problem by testing `model.predict()` locally before concluding whether the bug was in infrastructure or in code logic — this quickly identified bug #3 as a code-logic issue, not an infrastructure one.
+*(The CloudWatch log group interface tracing all Endpoint activities, a powerful tool for debugging Inference source code)*
+![CloudWatch Logs for Endpoint](/images/5-Workshop/5.5-Endpoint-and-serverless-api/endpoint-service.png)
 {{% /notice %}}
 
 ## Validating the model with real historical data (Quality Gate)
@@ -97,12 +98,8 @@ Once the endpoint was free of 500 errors, `build_real_features.py` was written f
 | 2 | Used the actual values for **the prediction date itself** | ~5% |
 
 **Official validation result** (model from the SageMaker Pipeline) — Store 1, 2015-06-15:
-```text
-Doanh so THAT ngay 2015-06-15: 5518.00
-Doanh so DU DOAN:           5780.13
-Sai lech:                   4.75%
-✅ PASS — Sai lech 4.75% trong nguong cho phep (15.0%)
-```
+
+![Real Validation Results](/images/5-Workshop/5.5-Endpoint-and-serverless-api/real-feature-validation.png)
 
 Different validation runs (each retraining gives a slightly different result due to randomness) produced errors in the **4.75%–5.14%** range — all comfortably within the quality-gate threshold.
 

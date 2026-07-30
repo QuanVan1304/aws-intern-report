@@ -5,8 +5,6 @@ chapter: false
 pre: " <b> 5.2. </b> "
 ---
 
-# Part 2 — Prerequisites & AWS Credentials Configuration
-
 ## 2.1. AWS Service Quota Requirements
 
 To execute real training jobs on AWS SageMaker, the deployment AWS account must have sufficient quotas. Many default or organizational accounts might be restricted with a **SageMaker Training Jobs quota = 0** for all instance types. This will completely block the ability to run real Training Jobs (even via SageMaker Pipelines).

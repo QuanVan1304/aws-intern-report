@@ -4,7 +4,6 @@ weight: 1
 chapter: false
 pre: " <b> 5.1. </b> "
 ---
-# Phần 1 — Tổng quan Workshop & Kiến trúc Dự án
 
 > **Dự án:** E-commerce Sales Forecasting System on AWS SageMaker
 > **Chương trình:** AWS First Cloud AI Journey
@@ -33,34 +32,34 @@ pre: " <b> 5.1. </b> "
 
 ## 1.3. Sơ đồ Kiến trúc Hệ thống (4 Tầng)
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
-│                       TẦNG DỮ LIỆU                          │
-│  Kaggle Rossmann CSV → Amazon S3 (raw + processed)           │
-│  Bucket: quanvan-ml-forecasting-2026 (ap-southeast-1)         │
+│                       DATA TIER                             │
+│  Kaggle Rossmann CSV → Amazon S3 (raw + processed)          │
+│  Bucket: quanvan-ml-forecasting-2026 (ap-southeast-1)       │
+└─────────────────────────┬───────────────────────────────────┘
+                          │
+┌─────────────────────────▼─────────────────────────────────────┐
+│                  MACHINE LEARNING TIER                        │
+│  Preprocessing & Feature Engineering (22 features)            │
+│  Train XGBoost (baseline) compared with PyTorch LSTM          │
+│  Automation via SageMaker Pipeline (Real Training Step)       │
+│  Results: RMSE 925.28, MAPE 9.92% (XGBoost, primary model)    │
 └─────────────────────────┬─────────────────────────────────────┘
                           │
 ┌─────────────────────────▼─────────────────────────────────────┐
-│                  TẦNG MACHINE LEARNING                        │
-│  Tiền xử lý & Feature Engineering (22 features)                │
-│  Train XGBoost (baseline) so sánh với PyTorch LSTM              │
-│  Tự động hóa qua SageMaker Pipeline (Training Step thật)        │
-│  Kết quả: RMSE 925.28, MAPE 9.92% (XGBoost, model chính)         │
+│                  SERVING TIER                                 │
+│  SageMaker Endpoint (ml.t2.medium)                            │
+│  → AWS Lambda (rossmann-forecast-api)                         │
+│  → API Gateway REST API (POST /forecast, stage prod)          │
+│  + Demo UI Dashboard (run locally, independent of AWS)        │
 └─────────────────────────┬─────────────────────────────────────┘
                           │
-┌─────────────────────────▼─────────────────────────────────────┐
-│                  TẦNG PHỤC VỤ (SERVING)                       │
-│  SageMaker Endpoint (ml.t2.medium)                             │
-│  → AWS Lambda (rossmann-forecast-api)                           │
-│  → API Gateway REST API (POST /forecast, stage prod)             │
-│  + Demo UI Dashboard (chạy local, không phụ thuộc AWS)            │
-└─────────────────────────┬─────────────────────────────────────┘
-                          │
-┌─────────────────────────▼─────────────────────────────────────┐
-│                     TẦNG GIÁM SÁT                              │
-│  Data Drift Detection (Z-Score, mô phỏng qua drift_simulator.py) │
-│  CloudWatch Dashboard: RossmannForecastingDashboard              │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────▼──────────────────────────────────────────┐  
+│                     MONITORING TIER                                │
+│  Data Drift Detection (Z-Score, simulated via drift_simulator.py)  │
+│  CloudWatch Dashboard: RossmannForecastingDashboard                │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 1.4. Lộ trình Thực hiện (Timeline)

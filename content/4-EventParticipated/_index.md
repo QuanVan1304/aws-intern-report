@@ -6,39 +6,44 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** for your report, including this warning.
-{{% /notice %}}
-
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
-
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
+During my internship, I participated in 2 events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with wonderful moments. Below are the detailed descriptions of the events I attended:
 
 ### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+&emsp;**Event Name:** FCAJ Knowledge Sharing Session  
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** June 13, 2026  
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Location:** In-person  
 
 &emsp;**Role:** Attendee  
+
+&emsp;**Description:**  
+&emsp;This was the first event I attended in person, featuring 4 highly practical presentations covering both technical knowledge and career orientation:
+
+&emsp;1. **"From First Cloud AI Journey to AWS Partner"** presented by Mr. Danh Hoang Hieu Nghi (AI Engineer, AWS Community Builder).
+
+&emsp;2. **"What does a DevOps Engineer really do?"** – An insightful deep dive into the daily responsibilities of a DevOps Engineer.
+
+&emsp;3. **"A scalable URL shortening service on AWS"** – A classic System Design problem presented by Dinh Trung Kien and Nguyen Minh Tho.
+
+&emsp;4. **"Real-world Stories and Culture in Multinational Corporations"** – Valuable workplace experiences shared by Mr. Dat Pham (Data Analytics Engineer) and Mr. Cuong Nguyen (Process Engineer).
+
+&emsp;**Outcomes / Value Gained:**  
+&emsp;Through this event, I gained a comprehensive overview of career progression within the cloud ecosystem. The technical deep-dives into AWS architecture design (scalable URL shortening) and the realities of the DevOps profession significantly enriched my technical mindset. Furthermore, the insights into professional corporate culture deeply motivated me and provided essential preparation for my upcoming career path.
 
 ---
 
 ### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+&emsp;**Event Name:** AWS First Cloud AI Journey Community Day - June 2026  
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 09:00 – 12:00 | Saturday, June 27, 2026  
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Location:** Online via YouTube (Original venue: Bitexco Financial Tower, HCMC)  
 
 &emsp;**Role:** Attendee  
+
+&emsp;**Description:**  
+&emsp;The event provided fresh perspectives on the AI wave shaping the future of enterprises. It featured in-depth sharing sessions and live practical demos on: the "Cloud Thinker" mindset, building Voice AI for the Vietnamese language, applying Dev Agents to automate DevOps and reduce Mean Time To Recovery (MTTR), utilizing Amazon Q in Human Resources (HR) operations, and securing Amazon Q deployments using an MCP server.
+
+&emsp;**Outcomes / Value Gained:**  
+&emsp;I learned how enterprises practically deploy GenAI into real-world operations rather than just keeping it at the conceptual level. The most significant takeaway was grasping the importance of a "Human-in-the-loop" approach in AI workflows and understanding enterprise data security methods when integrating with Large Language Models (LLMs).

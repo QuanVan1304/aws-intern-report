@@ -5,9 +5,6 @@ weight: 6
 chapter: false
 pre: " <b> 5.6. </b> "
 ---
-
-# Cleaning Up Resources After the Demo
-
 #### Why cleanup can't wait
 
 The **SageMaker Endpoint** (`rossmann-forecasting-endpoint`, `ml.t2.medium` instance) is billed **continuously, by the hour**, from the moment it's deployed, regardless of whether it ever receives a request. It's by far the most expensive resource in this architecture if left running.

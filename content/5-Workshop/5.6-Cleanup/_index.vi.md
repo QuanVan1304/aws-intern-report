@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.6. </b> "
 ---
 
-# Dọn dẹp tài nguyên sau demo
-
 #### Vì sao phải dọn dẹp ngay
 
 **SageMaker Endpoint** (`rossmann-forecasting-endpoint`, instance `ml.t2.medium`) tính phí **theo giờ liên tục** kể từ lúc deploy, bất kể có request gọi đến hay không. Đây là tài nguyên tốn kém nhất trong toàn bộ kiến trúc nếu quên xóa.

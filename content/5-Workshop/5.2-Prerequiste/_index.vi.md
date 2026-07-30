@@ -5,8 +5,6 @@ chapter: false
 pre: " <b> 5.2. </b> "
 ---
 
-# Phần 2 — Yêu cầu Tiền đề & Cấu hình AWS Credentials
-
 ## 2.1. Yêu cầu về Service Quota trên AWS
 
 Để chạy được các công việc huấn luyện (Training Jobs) thực tế trên AWS SageMaker, tài khoản AWS triển khai dự án bắt buộc phải có đủ hạn mức (Quota). Rất nhiều tài khoản mặc định hoặc tài khoản tổ chức có thể bị giới hạn **quota SageMaker Training Jobs = 0** cho toàn bộ các loại instance. Điều này sẽ chặn hoàn toàn khả năng chạy Training Job thật (kể cả khi chạy thông qua SageMaker Pipeline).

@@ -1,125 +1,85 @@
 ---
 title: "Event 2"
 date: 2024-01-01
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Bài thu hoạch “AWS First Cloud AI Journey Community Day - June 2026”
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+### Thông tin chung về sự kiện
+- **Tên sự kiện:** AWS First Cloud AI Journey Community Day - June 2026
+- **Đơn vị tổ chức:** AWS Study Group
+- **Thời gian:** 09:00 – 12:00 | Thứ Bảy, 27/06/2026
+- **Địa điểm:** Trực tuyến qua YouTube (Sự kiện gốc tại Bitexco Financial Tower, TP.HCM)
+- **Vai trò:** Người tham dự
 
 ### Mục Đích Của Sự Kiện
-
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Chia sẻ những kinh nghiệm thực chiến từ các chuyên gia, Founder về công nghệ Cloud và AI.
+- Làm rõ bài toán xây dựng và vận hành Voice Agent trên nền tảng AWS (sử dụng Amazon Bedrock).
+- Giới thiệu cách ứng dụng AI (DevOps Agent, Amazon Q) để giải quyết các bài toán vận hành hệ thống và quản trị nhân sự (HR).
+- Hướng dẫn thiết lập bảo mật riêng tư và tích hợp hệ thống qua MCP Server.
 
 ### Danh Sách Diễn Giả
-
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **Anh Steve Trần** - Founder của Cloud Thinker.
+- **Anh Nghị (Renova Cloud), Anh Kiệt (Student Video Group), Anh Trung (Founder R AI)** - Các diễn giả phiên Voice AI.
+- **Chị Bảo & Anh Nguyên** - Chuyên gia từ Cloud Kinetis.
+- **Anh Trường & Chị Minh Anh** - Chuyên gia từ Noventis.
+- **Anh Toàn Nguyễn & Anh Nghị** - Chuyên gia phiên Bảo mật & Tích hợp Amazon Q.
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### Khởi nghiệp & Tư duy Cloud Thinker
+- **Trọng tâm:** Giải bài toán thực tế của khách hàng.
+- Anh Steve Trần chia sẻ về hành trình khởi nghiệp và bài toán vận hành Contact Center. Bài học cốt lõi được đưa ra là: Khi xây dựng bất kỳ giải pháp công nghệ nào, kỹ sư cần phải thấu hiểu sâu sắc "nỗi đau" (pain points) thực tế của khách hàng chứ không chỉ tập trung vào công nghệ.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+#### Kiến trúc và Thực tiễn triển khai Voice AI
+- **Trọng tâm:** Xây dựng Voice Agent cho thị trường Việt Nam.
+- Anh Nghị giới thiệu chi tiết về các thành phần kiến trúc để cấu thành nên một hệ thống Voice AI hoàn chỉnh.
+- Anh Kiệt trình diễn một bản demo trực tiếp và sinh động về Voice Agent được xây dựng trên lõi Amazon Bedrock.
+- Anh Trung chia sẻ góc nhìn thực chiến khi triển khai cho các tập đoàn lớn tại Việt Nam: cách xử lý thách thức về nhận diện giọng vùng miền, ngôn ngữ đặc thù, và đặc biệt là kịch bản chuyển tiếp thông minh giữa AI và nhân viên con người (Human fallback).
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### Ứng dụng DevOps Agent trong vận hành
+- **Trọng tâm:** Giảm thời gian xử lý sự cố hệ thống (MTTR).
+- Chị Bảo và anh Nguyên demo cách sử dụng DevOps Agent để hỗ trợ đội ngũ IT điều tra nguyên nhân gốc rễ (root cause) của sự cố một cách tự động, giúp tiết kiệm đáng kể thời gian downtime của hệ thống.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+#### AI và Nguồn nhân lực (HR)
+- **Trọng tâm:** Chuyển đổi số nghiệp vụ Back-office.
+- Anh Trường và chị Minh Anh thảo luận về cách ứng dụng Amazon Q vào lĩnh vực nhân sự. AI giúp tự động hóa quy trình tuyển dụng (sàng lọc ứng viên) và đánh giá dữ liệu nhân sự một cách khách quan, hiệu quả.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
-
-#### Domain-Driven Design (DDD)
-
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
-
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+#### Bảo mật và Tích hợp với MCP Server
+- **Trọng tâm:** Private Security & Model Context Protocol.
+- Anh Toàn Nguyễn và anh Nghị đi sâu vào kỹ thuật thiết lập bảo mật riêng tư (private security) cho Amazon Q. Đồng thời, giải quyết bài toán kết nối AI với các hệ thống bên thứ ba (Third-party systems) thông qua MCP Server mà không làm ảnh hưởng đến an toàn dữ liệu.
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Tư Duy Sản Phẩm & Khách Hàng
+- Hiểu được rằng một sản phẩm AI thành công (như Voice Agent trong Contact Center) bắt buộc phải giải quyết triệt để các rào cản thực tế (như giọng địa phương, tiếng lóng) và luôn phải có cơ chế bàn giao cho con người (human-in-the-loop) để đảm bảo chất lượng dịch vụ.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
-
-#### Kiến Trúc Kỹ Thuật
-
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+#### Tư Duy Kỹ Thuật (Technical Mindset)
+- **Amazon Bedrock & LLMs:** Nắm được khái niệm cơ bản và luồng hoạt động khi xây dựng các tác vụ GenAI trên AWS.
+- **MCP Server:** Lần đầu tiên tiếp cận với kiến trúc MCP giúp mở rộng khả năng của AI Model một cách an toàn.
+- **DevOps Automation:** Nhận ra rằng AI không chỉ dùng để chat, mà còn có khả năng đọc log, phân tích root cause và hỗ trợ engineer sửa lỗi hệ thống (DevOps Agent).
 
 ### Ứng Dụng Vào Công Việc
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+- **Phân tích vấn đề từ gốc rễ:** Thay vì vội vàng lao vào code, tôi sẽ áp dụng tư duy "Cloud Thinker" – phân tích kỹ bài toán và bối cảnh trước khi thiết kế giải pháp cho dự án thực tập.
+- **Tích hợp Amazon Bedrock:** Đưa Amazon Bedrock vào danh sách các dịch vụ cần tìm hiểu sâu (research) để phục vụ cho các dự án tích hợp GenAI trong tương lai.
+- **Quy trình xử lý sự cố:** Học hỏi luồng phân tích root cause từ phiên DevOps Agent để cải thiện kỹ năng debug và fix bug trong quá trình làm lab AWS.
 
 ### Trải nghiệm trong event
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Dù chỉ tham dự trực tuyến qua YouTube, nhưng **FCAJ Community Day** đã mang lại cho tôi những trải nghiệm vô cùng sống động:
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+#### Demo thực chiến, dễ hiểu
+- Việc anh Kiệt demo trực tiếp Voice Agent trên nền Amazon Bedrock hay chị Bảo demo DevOps Agent giúp các kiến thức lý thuyết trở nên cực kỳ trực quan và dễ hình dung.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+#### Góc nhìn đa chiều từ các chuyên gia
+- Sự kiện có sự góp mặt của các Founder và chuyên gia từ nhiều công ty khác nhau (Cloud Thinker, Renova Cloud, R AI, Cloud Kinetis, Noventis). Nhờ đó, tôi nhận được những góc nhìn rất đa dạng: từ bài toán kỹ thuật (bảo mật, kiến trúc) cho đến bài toán kinh doanh (vận hành HR, Contact Center).
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+#### Tinh thần cộng đồng
+- Phần kết thúc sự kiện với bức ảnh lưu niệm và các hoạt động giveaway cho thấy sự gắn kết và năng lượng rất lớn từ cộng đồng AWS Study Group, tạo cho tôi rất nhiều động lực để tiếp tục theo đuổi con đường công nghệ đám mây.
 
 #### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+- Trong kỷ nguyên GenAI, việc làm chủ công nghệ lõi (như Bedrock) là cần thiết, nhưng biết cách tích hợp nó một cách an toàn (MCP Server, Private Security) và giải quyết đúng bài toán của khách hàng mới là điều làm nên giá trị của một kỹ sư.

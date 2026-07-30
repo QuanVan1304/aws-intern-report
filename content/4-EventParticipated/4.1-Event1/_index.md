@@ -6,121 +6,95 @@ chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# FCAJ Knowledge Sharing Session - June 2026
+
+### General Information
+- **Event Name:** FCAJ Knowledge Sharing Session
+- **Date:** June 12, 2026 *(Attended in-person on June 13, 2026)*
+- **Location:** In-person
+- **Role:** Attendee
 
 ### Event Objectives
-
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+- Share the career development roadmap in the Cloud and AI ecosystem.
+- Clarify the reality of a DevOps Engineer's daily tasks.
+- Provide an in-depth analysis of System Design on the AWS platform.
+- Bring authentic perspectives on the working environment and culture in multinational tech corporations.
 
 ### Speakers
-
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **Danh Hoang Hieu Nghi** - AI Engineer, AWS Community Builder, AWS Student Builder Group Leader
+- **Dinh Trung Kien & Nguyen Minh Tho** - Experts sharing on System Design
+- **Mr. Dat Pham** - Data Analytics Engineer
+- **Mr. Cuong Nguyen** - Process Engineer
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### Developing with Cloud & AI
+- **Topic:** "From First Cloud AI Journey to AWS Partner"
+- Mr. Hieu Nghi shared his journey of personal capacity development and how to leverage AWS resources.
+- Orientation on the journey to becoming an AWS Community Builder and advancing to an AWS Partner.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### Decoding the DevOps Profession
+- **Topic:** "What does a DevOps Engineer really do?"
+- Debunking common myths about DevOps Engineers.
+- Deep dive into practical work: building CI/CD pipelines, Infrastructure as Code (IaC), and continuous system monitoring/operation.
 
-#### Transitioning to modern application architecture – Microservices
+#### System Design on AWS
+- **Topic:** "A scalable URL shortening service on AWS"
+- Dissecting a classic system architecture: URL shortening service.
+- Focusing on designing a highly scalable system, handling high traffic, and maximizing the use of AWS managed services.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
-
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
-
-#### Domain-Driven Design (DDD)
-
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
-
-#### Event-Driven Architecture
-
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+#### Corporate Culture and Real-world Stories
+- **Topic:** "Real-world stories and culture in multinational corporations"
+- Authentic sharing about the pressures and opportunities in an international environment.
+- The importance of Process thinking and Data Analytics in decision-making.
 
 ### Key Takeaways
 
-#### Design Mindset
+#### Career Development Mindset
+- **Clear roadmap:** Understanding the importance of combining theoretical learning, practical labs, and achieving AWS Certifications.
+- **Community mindset:** Realizing that joining tech communities (like AWS Student Builder) is a great launchpad for learning and expanding networks.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+#### Technical Architecture (System Design)
+- **Distributed design:** Approach to the URL Shortening problem, choosing the right Database (Relational vs NoSQL), Caching strategy, and Load balancing.
+- Deep understanding of Scalability and High Availability on the Cloud.
 
-#### Technical Architecture
+#### DevOps & Automation Mindset
+- Realizing that CI/CD is not just a toolset but a **working culture**.
+- The importance of IaC in minimizing human errors during infrastructure deployment.
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+#### Soft Skills
+- Cross-departmental communication and the ability to present technical issues to non-technical stakeholders.
+- Discipline, proactiveness, and fast adaptability in a multinational working environment.
 
 ### Applying to Work
 
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+- **Apply System Design** to current projects (e.g., AI/ML projects): Consider scalability and data flow right from the initial design phase.
+- **Integrate automation mindset:** Start learning and applying basic CI/CD pipelines to automate deployments for personal/internship projects.
+- **Build a certification roadmap:** Set goals to conquer AWS certifications (like Cloud Practitioner or Solutions Architect) to solidify foundational knowledge.
+- **Improve soft skills:** Be more proactive in asking mentors questions, and practice a professional work ethic and strict adherence to deadlines.
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+Attending the **FCAJ Knowledge Sharing Session** was an eye-opening experience, helping me bridge the gap between academic knowledge and the real-world corporate environment. Some of the standout experiences include:
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+#### Learning from real-world experts
+- Listening to authentic stories helped shorten the distance between theory and practice.
+- The way speakers approach and solve problems (problem-solving) greatly inspired me to change my learning methods.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+#### Deep architectural mindset experience
+- Strongly impressed by the complexity of designing a seemingly simple system like "URL shortening".
+- Learned how AWS engineers calculate factors like throughput, storage, and latency.
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+#### Broadening perspectives on IT roles
+- Understood that DevOps or Data Analytics do not operate in silos but are tightly connected gears that bring business value to the company.
+- Identified personal weaknesses in Infrastructure knowledge, helping me plan for further improvement.
 
 #### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+- Technology changes constantly; having a solid foundational mindset (System Design, DevOps culture) is more important than just knowing how to use tools.
+- English proficiency and a Growth mindset are prerequisites to surviving and thriving in multinational corporations.
 
 #### Some event photos
-*Add your event photos here*  
+*Add your event photos here (e.g., check-in photos, photos of speaker slides...)*
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+> Overall, the event provided not only "hardcore" technical knowledge but also a comprehensive view of corporate culture, helping me clearly shape my learning and career path for the upcoming journey.

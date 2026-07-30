@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.4.2. </b> "
 ---
 
-# Automating the Training Lifecycle with SageMaker Pipeline
-
 ## The turning point: a quota increase actually got approved
 
 After moving to a personal AWS account (Part 2), the SageMaker Training Job quota was still 0. A quota increase request was submitted through the Service Quotas API for the `ml.m5.large` instance type, and **it was approved**, raising the quota from 0 to 1. This was the turning point that allowed the project to move from a local substitute (`simple_orchestration.py`) to actually running a Pipeline on AWS.
@@ -43,6 +41,7 @@ This is a pragmatic choice for this project, not a judgment that SDK v2 is bette
     }
 }
 ```
+![SageMaker Pipeline Training Job Details](/images/5-Workshop/5.4-Model-training-and-pipeline/pipeline-training-job.png)
 
 The Training Job completed and produced a real model artifact on S3:
 ```
@@ -83,6 +82,7 @@ def package_and_upload_source():
     s3.upload_file(LOCAL_TARBALL, BUCKET, SOURCE_S3_KEY)
     return f"s3://{BUCKET}/{SOURCE_S3_KEY}"
 ```
+![Sourcedir Packaged on S3](/images/5-Workshop/5.4-Model-training-and-pipeline/s3-sourcedir.png)
 
 The Pipeline is now fully self-contained — it no longer depends on any unrelated, older artifact.
 
@@ -105,6 +105,7 @@ Experimented with migrating to SageMaker Python SDK v3 in a separate virtual env
 Before the quota was approved, `simple_orchestration.py` was built as a working substitute — a plain Python script chaining `subprocess` calls through Preprocessing → Training (local) → Deploy → Test, with an automated quality gate (15% MAPE threshold). It served its purpose at the time and is kept in the repository as a record of that phase, but the SageMaker Pipeline described above is the system actually used for the project's final results.
 
 ## Overall training lifecycle architecture
+![Training Pipeline Architecture](/images/5-Workshop/5.4-Model-training-and-pipeline/training-pipeline-architecture.png)
 
 ```text
 [Data Preprocessing] → S3 (train.csv, val.csv)

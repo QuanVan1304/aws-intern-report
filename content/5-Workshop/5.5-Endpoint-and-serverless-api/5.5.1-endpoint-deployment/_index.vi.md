@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.5.1. </b> "
 ---
 
-# Deploy lên SageMaker Endpoint
-
 ## Đóng gói Model theo chuẩn SageMaker
 
 `deploy_endpoint.py` dùng **boto3 thuần** (không dùng SageMaker Python SDK) để kiểm soát toàn bộ quá trình đóng gói, tránh vấn đề tương thích SDK.
@@ -67,7 +65,8 @@ Script tự động kiểm tra endpoint đã tồn tại chưa — `update_endpo
 
 ✅ ENDPOINT DA SAN SANG DE SU DUNG!
 ```
-
+*(Xác nhận trên AWS Console: Endpoint đã được tạo thành công và chuyển trạng thái sang InService, sẵn sàng phục vụ các yêu cầu dự báo)*
+![Endpoint In Service](/images/5-Workshop/5.5-Endpoint-and-serverless-api/endpoint-in-service.png)
 ## Ba lỗi thực tế đã gặp và cách xử lý
 
 | # | Lỗi | Nguyên nhân | Cách xử lý |
@@ -78,6 +77,8 @@ Script tự động kiểm tra endpoint đã tồn tại chưa — `update_endpo
 
 {{% notice tip %}}
 **Quy trình gỡ lỗi thực tế:** đọc trực tiếp CloudWatch Logs (`aws logs get-log-events`) để lấy traceback thật, sau đó cô lập vấn đề bằng cách test `model.predict()` trực tiếp trên máy local trước khi kết luận lỗi nằm ở tầng hạ tầng hay logic mã nguồn — cách này xác định nhanh vấn đề #3 nằm ở logic code, không phải hạ tầng.
+*(Giao diện nhóm log CloudWatch lưu vết toàn bộ hoạt động của Endpoint, công cụ đắc lực để gỡ lỗi mã nguồn Inference)*
+![CloudWatch Logs cho Endpoint](/images/5-Workshop/5.5-Endpoint-and-serverless-api/endpoint-service.png)
 {{% /notice %}}
 
 ## Validate Model bằng Dữ liệu Lịch sử Thật (Quality Gate)
@@ -97,12 +98,7 @@ Sau khi endpoint hết lỗi 500, viết `build_real_features.py` để validate
 | 2 | Lấy đúng giá trị thật của **chính ngày dự đoán** | ~5% |
 
 **Kết quả validate chính thức** (model từ SageMaker Pipeline) — Store 1, ngày 2015-06-15:
-```text
-Doanh so THAT ngay 2015-06-15: 5518.00
-Doanh so DU DOAN:           5780.13
-Sai lech:                   4.75%
-✅ PASS — Sai lech 4.75% trong nguong cho phep (15.0%)
-```
+![Kết quả Validate Thực tế](/images/5-Workshop/5.5-Endpoint-and-serverless-api/real-feature-validation.png)
 
 Các lần chạy validate khác nhau (mỗi lần model được train lại cho kết quả hơi khác do random seed) cho sai lệch trong khoảng **4.75%–5.14%** — đều nằm sâu trong ngưỡng quality-gate.
 

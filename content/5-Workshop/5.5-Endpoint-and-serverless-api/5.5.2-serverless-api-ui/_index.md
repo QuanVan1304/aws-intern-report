@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.5.2. </b> "
 ---
 
-# Serverless REST API & Demo UI
-
 ## Building the REST API (Lambda + API Gateway)
 
 A SageMaker Endpoint can only be invoked using AWS credentials/SDK (`sagemaker-runtime`) — it is not a public REST endpoint. To let external clients call it with a plain HTTP request, a Lambda + API Gateway layer was added.
@@ -21,7 +19,8 @@ A SageMaker Endpoint can only be invoked using AWS credentials/SDK (`sagemaker-r
 - New REST API, Resource `/forecast`, Method `POST`, **Lambda Proxy integration** pointing to `rossmann-forecast-api`.
 - Deployed to stage: `prod`.
 - Invoke URL: `https://81nxjqyb91.execute-api.ap-southeast-1.amazonaws.com/prod/forecast`
-
+*(Configuration diagram of the POST method on API Gateway, directly routing client requests to the Lambda function for processing)*
+![API Gateway Lambda Integration](/images/5-Workshop//5.5-Endpoint-and-serverless-apit/apigateway-lambda-integration.png)
 ### End-to-end testing (3 layers: Lambda → boto3 → real REST API)
 
 ```text
@@ -44,7 +43,11 @@ Recommended test order: local `model.predict()` → invoke the SageMaker Endpoin
 {{% /notice %}}
 
 ---
-
+## Overall Serving Architecture
+![Serving Architecture](/images/5-Workshop/5.5-Endpoint-and-serverless-api/serving-architecture.png)
+{{% notice tip %}}
+The entire serving flow is independent of the training flow (section 5.4.2) — the SageMaker Endpoint only reads the model artifact already available on S3 and does not automatically re-trigger when the Training Pipeline finishes running (in accordance with the CI/CD separation principle mentioned in 5.4.2).
+{{% /notice %}}
 ## Demo UI Dashboard (runs locally, no AWS dependency)
 
 Besides the cloud REST API, the project includes a web UI for quick demos without needing AWS credentials configured — suited for presentations.

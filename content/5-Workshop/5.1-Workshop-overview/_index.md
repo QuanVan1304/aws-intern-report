@@ -5,8 +5,6 @@ chapter: false
 pre: " <b> 5.1. </b> "
 ---
 
-# Part 1 — Workshop Overview & Project Architecture
-
 > **Project:** E-commerce Sales Forecasting System on AWS SageMaker
 > **Program:** AWS First Cloud AI Journey
 > **Organized by:** Amazon Web Services Viet Nam Company Limited
@@ -38,7 +36,7 @@ pre: " <b> 5.1. </b> "
 │                       DATA TIER                             │
 │  Kaggle Rossmann CSV → Amazon S3 (raw + processed)          │
 │  Bucket: quanvan-ml-forecasting-2026 (ap-southeast-1)       │
-└─────────────────────────┬─────────────────────────────────────┘
+└─────────────────────────┬───────────────────────────────────┘
                           │
 ┌─────────────────────────▼─────────────────────────────────────┐
 │                  MACHINE LEARNING TIER                        │
@@ -56,11 +54,11 @@ pre: " <b> 5.1. </b> "
 │  + Demo UI Dashboard (run locally, independent of AWS)        │
 └─────────────────────────┬─────────────────────────────────────┘
                           │
-┌─────────────────────────▼─────────────────────────────────────┐
-│                     MONITORING TIER                           │
-│  Data Drift Detection (Z-Score, simulated via drift_simulator.py)│
-│  CloudWatch Dashboard: RossmannForecastingDashboard           │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────▼──────────────────────────────────────────┐  
+│                     MONITORING TIER                                │
+│  Data Drift Detection (Z-Score, simulated via drift_simulator.py)  │
+│  CloudWatch Dashboard: RossmannForecastingDashboard                │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 1.4. Implementation Roadmap (Timeline)

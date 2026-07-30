@@ -5,55 +5,37 @@ weight: 1
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-
 ### Mục tiêu tuần 2:
-
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tiền xử lý dữ liệu (Data preprocessing) — Exploratory Data Analysis (EDA), làm sạch dữ liệu, phân chia (split), chuẩn hóa (scale) và tải lên S3.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --- | --- | --- | --- |
+| 2 | - Tải Rossmann Store Sales dataset từ Kaggle bao gồm `train.csv` (~38MB) và `store.csv`, lưu vào thư mục `week2_preprocessing/data/`. <br> - Upload raw data lên đường dẫn `s3://aws-internship-hkq-2026/ml-forecasting/data/raw/`. <br> - Tải `train.csv` qua `boto3` và `store.csv` qua AWS CLI. | 22/06/2026 | 22/06/2026 | Kaggle, Boto3 Docs |
+| 3 | - Viết và chạy file notebook EDA (`eda.ipynb`). <br> - Phân tích chi tiết shape, data types, và missing values của tập dữ liệu. <br> - Phân tích phân phối của biến Sales và sự biến động của Sales theo thời gian, ngày trong tuần, tháng. <br> - Đánh giá ảnh hưởng của các biến Promo và StateHoliday đến doanh số. | 23/06/2026 | 23/06/2026 | Pandas/Seaborn Docs |
+| 4 | - Viết script `preprocessing.py` (Phần 1). <br> - Merge `train.csv` và `store.csv` dựa theo ID `Store`. <br> - Loại bỏ các bản ghi của cửa hàng đóng cửa (`Open=0`) và các ngày không có doanh thu (`Sales=0`). <br> - Điền giá trị thiếu (fill missing values) cho các cột Competition và Promo2. <br> - Encode các categorical features (`StateHoliday`, `StoreType`, `Assortment`). | 24/06/2026 | 24/06/2026 | Pandas Docs |
+| 5 | - Viết script `preprocessing.py` (Phần 2). <br> - Thêm các calendar features: `Year`, `Month`, `Day`, `WeekOfYear`, `IsWeekend`. <br> - Thực hiện time-series split theo đúng thứ tự thời gian. <br> - Log-transform biến mục tiêu và fit hàm StandardScaler (chỉ fit trên tập train). | 25/06/2026 | 25/06/2026 | Scikit-Learn Docs |
+| 6 | - Upload processed data lên đường dẫn `s3://aws-internship-hkq-2026/ml-forecasting/data/processed/`. <br> - Đảm bảo đẩy đủ 4 files: `train.csv` (103MB), `val.csv` (3.7MB), `test.csv` (3.9MB), và `scaler.pkl` (538B). | 26/06/2026 | 26/06/2026 | Boto3 Docs |
 
 ### Kết quả đạt được tuần 2:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Phát hiện chính từ EDA:**
+  * Sales bị lệch phải (right-skewed), cần log-transform target khi train.
+  * Có 172,817 records đóng cửa, quyết định loại bỏ khi train.
+  * Seasonality rõ ràng theo năm nên cần thêm calendar features.
+  * Doanh số Thứ 2/Chủ nhật cao nhất, Thứ 7 thấp nhất nên DayOfWeek là feature quan trọng.
+  * Tháng 12 cao vượt trội nên Month là feature quan trọng.
+  * Promo tăng Sales lên ~37%, đây là feature quan trọng nhất.
+* **Dữ liệu phân chia (Data Split):**
+  * Train: 785,727 rows (2013-01-01 → 2015-05-31).
+  * Val: 28,423 rows (2015-06-01 → 2015-06-30).
+  * Test: 30,188 rows (2015-07-01 → 2015-07-31).
+* **Thành phẩm lưu trữ trên S3:**
+  * Dữ liệu thô: `train.csv` (38MB), `store.csv` (45KB).
+  * Dữ liệu xử lý: `train.csv` (103MB), `val.csv` (3.7MB), `test.csv` (3.9MB), `scaler.pkl` (538B).
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+### Ghi chú Kỹ thuật (Technical Notes):
+* AWS CLI bị lỗi multipart upload với file lớn — phải dùng `boto3.upload_file()` thay thế để đẩy `train.csv` lên S3.
+* Cú pháp `fillna(inplace=True)` đã bị deprecated trong pandas mới — nhóm sẽ refactor sang cú pháp mới ở tuần 8.
+* Dataset gốc chỉ có đến 2015-07-31, không phải 2015-12-31 như dự kiến ban đầu — do đó split boundaries đã được điều chỉnh phù hợp.
+* Scaler được đảm bảo chỉ fit trên train set, sau đó mới transform val và test — tránh data leakage thành công.

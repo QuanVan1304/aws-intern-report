@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.4.2. </b> "
 ---
 
-# Tự động hóa vòng đời huấn luyện bằng SageMaker Pipeline
-
 ## Bước ngoặt: yêu cầu tăng quota được duyệt
 
 Sau khi chuyển sang tài khoản riêng (Phần 2), quota Training Job vẫn = 0. Một yêu cầu tăng quota được gửi qua Service Quotas API cho instance `ml.m5.large`, và **được AWS phê duyệt**, nâng quota từ 0 lên 1. Đây là bước ngoặt cho phép chuyển từ giải pháp thay thế local (`simple_orchestration.py`) sang chạy Pipeline thật trên AWS.
@@ -43,6 +41,7 @@ Cài đặt SDK không ghim phiên bản (`pip install sagemaker`) khiến môi 
     }
 }
 ```
+![Chi tiết Training Job trong SageMaker Pipeline](/images/5-Workshop/5.4-Model-training-and-pipeline/pipeline-training-job.png)
 
 Training Job hoàn tất, sinh model artifact thật trên S3:
 ```
@@ -83,6 +82,7 @@ def package_and_upload_source():
     s3.upload_file(LOCAL_TARBALL, BUCKET, SOURCE_S3_KEY)
     return f"s3://{BUCKET}/{SOURCE_S3_KEY}"
 ```
+![Gói mã nguồn trên S3](/images/5-Workshop/5.4-Model-training-and-pipeline/s3-sourcedir.png)
 
 Pipeline giờ hoàn toàn tự chủ — không còn phụ thuộc artifact của một job cũ, không liên quan.
 
@@ -105,6 +105,7 @@ Thử nghiệm migrate sang SageMaker Python SDK v3 trong môi trường ảo ri
 Trước khi quota được duyệt, `simple_orchestration.py` được xây dựng làm giải pháp thay thế: một script Python thuần gọi tuần tự `subprocess` qua Preprocessing → Training (local) → Deploy → Test, chứng minh cùng luồng logic mà không cần SageMaker Pipelines. Có kèm quality gate tự động (ngưỡng MAPE 15%). Script này đã hoàn thành đúng vai trò ở giai đoạn đó, được giữ lại trong repo như dấu mốc, nhưng SageMaker Pipeline thật (mô tả ở trên) mới là hệ thống dùng cho kết quả cuối cùng của dự án.
 
 ## Kiến trúc tổng thể vòng đời Training
+![Kiến trúc tổng thể vòng đời Training](/images/5-Workshop/5.4-Model-training-and-pipeline/training-pipeline-architecture.png)
 
 ```text
 [Data Preprocessing] → S3 (train.csv, val.csv)

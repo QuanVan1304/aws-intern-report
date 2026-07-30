@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.4.1. </b> "
 ---
 
-# Huấn luyện Local: XGBoost vs. LSTM
-
 ## Kết quả So sánh 2 Mô hình
 
 | Mô hình | Test RMSE | Test MAPE | Thời gian Train | Quyết định |
