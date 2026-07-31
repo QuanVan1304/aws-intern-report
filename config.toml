@@ -1,6 +1,7 @@
 baseURL = "https://quanvan1304.github.io/aws-internship-report/"
 
-relativeURLs = true
+relativeURLs = false
+
 canonifyURLs = false
 defaultContentLanguage = "en"
 
