@@ -8,10 +8,6 @@ chapter: false
     
 # Internship Report
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
 ### Student Information:
 &emsp; **Full Name:** Van Thai Quan
 
@@ -29,7 +25,7 @@ chapter: false
 
 &emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Internship Duration:** From 15/06/2026 to 14/18/2026
+&emsp; **Internship Duration:** From 15/06/2026 to 14/08/2026
 
 ![Your profile picture](/images/avatar.jpg)
 
